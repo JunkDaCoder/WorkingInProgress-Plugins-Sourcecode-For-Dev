@@ -1,9 +1,9 @@
 <?php
 
-namespace NetherManiacsKingdom\End-Generator;
+namespace End-Generator/End-Generator-master/src/NetherManiacsKingdomTeam/End-Generator;
 
 use pocketmine\block\Block;
-use pocketmine\block\Block\EndStone;
+use pocketmine\block\Block\EndStone;;
 use pocketmine\level\ChunkManager;
 use pocketmine\level\generator\biome\Biome;
 use pocketmine\level\generator\biome\BiomeSelector;
@@ -30,7 +30,7 @@ class EndGenerator extends Generator{
 	private $emptyHeight = 64;
 	private $emptyAmplitude = 1;
 	private $density = 0.5;
-	private $bedrockDepth = 40;
+	private $bedrockDepth = 5;
 	/** @var Populator[] */
 	private $generationPopulators = [];
 	/** @var Simplex */
@@ -69,8 +69,18 @@ class EndGenerator extends Generator{
 		$this->random->setSeed($this->level->getSeed());
 		$this->noiseBase = new Simplex($this->random, 4, 1 / 4, 1 / 64);
 		$this->random->setSeed($this->level->getSeed());
-		
-		
+		$ores = new Ore();
+		$ores->setOreTypes([
+			new OreType(new CoalOre(), 20, 16, 0, 128),
+			new OreType(New IronOre(), 20, 8, 0, 64),
+			new OreType(new RedstoneOre(), 8, 7, 0, 16),
+			new OreType(new LapisOre(), 1, 6, 0, 32),
+			new OreType(new GoldOre(), 2, 8, 0, 32),
+			new OreType(new DiamondOre(), 1, 7, 0, 16),
+			new OreType(new Dirt(), 20, 32, 0, 128),
+			new OreType(new Gravel(), 10, 16, 0, 128)
+		]);
+		$this->populators[] = $ores;*/
 	}
 	public function generateChunk($chunkX, $chunkZ){
 		$this->random->setSeed(0xdeadbeef ^ ($chunkX << 8) ^ $chunkZ ^ $this->level->getSeed());
@@ -78,7 +88,7 @@ class EndGenerator extends Generator{
 		$chunk = $this->level->getChunk($chunkX, $chunkZ);
 		for($x = 0; $x < 16; ++$x){
 			for($z = 0; $z < 16; ++$z){
-				$biome = Biome::getBiome(Biome::NORMALBIOME);
+				$biome = Biome::getBiome(Biome::DEFAULT);
 				$chunk->setBiomeId($x, $z, $biome->getId());
 				$color = [0, 0, 0];
 				$bColor = $biome->getColor();
@@ -110,10 +120,6 @@ class EndGenerator extends Generator{
 		foreach($this->populators as $populator){
 			$populator->populate($this->level, $chunkX, $chunkZ, $this->random);
 		}
-		$chunk = $this->level->getChunk($chunkX, $chunkZ);
-		$biome = Biome::getBiome($chunk->getBiomeId(7, 7));
-		$biome->populateChunk($this->level, $chunkX, $chunkZ, $this->random);
-	}
 	public function getSpawn(){
 		return new Vector3(127.5, 128, 127.5);
 	}
