@@ -1,6 +1,6 @@
 <?php
 
-namespace End-Generator/End-Generator-master/src/NetherManiacsKingdomTeam/End-Generator;
+namespace NetherManiacsKingdomTeam/End-Generator;
 
 use pocketmine\plugin\PluginBase;
 use pocketmine\level\generator\Generator;
