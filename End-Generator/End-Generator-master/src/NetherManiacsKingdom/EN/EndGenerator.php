@@ -88,7 +88,7 @@ class EndGenerator extends Generator{
 		$chunk = $this->level->getChunk($chunkX, $chunkZ);
 		for($x = 0; $x < 16; ++$x){
 			for($z = 0; $z < 16; ++$z){
-				$biome = Biome::getBiome(Biome::HELL);
+				$biome = Biome::getBiome(Biome::DEFULAT);
 				$chunk->setBiomeId($x, $z, $biome->getId());
 				$color = [0, 0, 0];
 				$bColor = $biome->getColor();
@@ -121,7 +121,7 @@ class EndGenerator extends Generator{
 			$populator->populate($this->level, $chunkX, $chunkZ, $this->random);
 		}
 		$chunk = $this->level->getChunk($chunkX, $chunkZ);
-		$biome = Biome::getBiome($chunk->getBiomeId(7, 7));
+		$biome = Biome::getBiome($chunk->getBiomeId(3, 3));
 		$biome->populateChunk($this->level, $chunkX, $chunkZ, $this->random);
 	}
 	public function getSpawn(){
