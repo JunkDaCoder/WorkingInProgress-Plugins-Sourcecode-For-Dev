@@ -131,8 +131,8 @@ class Arena {
 		@unlink ( $path . "$name.yml" );
 	}
 	
-	public static function loadArenas($plugin) {
-		$path = $plugin->getDataFolder () . "arena/";
+	public function loadArenas() {
+		$path = $this->getDataFolder () . arena/;
 		if (! file_exists ( $path )) {
 			@mkdir ( $this->pgin->getDataFolder () );
 			@mkdir ( $path );
